@@ -1,7 +1,9 @@
-FROM ubuntu:14.04
+FROM python:3
 RUN apt-get update
-RUN apt-get -y install build-essential libssl-dev libffi-dev python-dev git
-RUN apt-get -y install python3 python3-pip
-#RUN pip3 install azure azure-cli-core
-#RUN git clone https://github.com/Azure/azure-storage-python
-#RUN python3 /azure-storage-python/setup.py install
+RUN git clone https://github.com/Azure/azure-cli
+WORKDIR ./azure-cli
+RUN python scripts/dev_setup.py
+COPY kube-config /root/.kube/config
+RUN mkdir /src
+WORKDIR /src
+
